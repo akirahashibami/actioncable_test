@@ -1,4 +1,8 @@
-App.room = App.cable.subscriptions.create　"RoomChannel",
+jQuery(document).on 'turbolinks:load', ->
+  rooms = $('#rooms')
+
+  # {}の中に記述でパラメータとしてchannelに渡せる
+  App.room = App.cable.subscriptions.create { channel: "RoomChannel", room_id: rooms.data('room') },
 
   # 通信が確立された時
   connected: ->
@@ -17,9 +21,9 @@ App.room = App.cable.subscriptions.create　"RoomChannel",
   # サーバーサイドのspeakアクションにmessageパラメーターを渡す
     @perform 'speak', message: message
 
-jQuery(document).on 'keypress', '[data-behavior~=room_speaker]', (event) ->
-  if event.keyCode is 13
-    # speak メソッド, event.target.valueを引数に
-    App.room.speak [event.target.value, $('[data-user_id]').attr('data-user_id'), $('[data-room_id]').attr('data-room_id')]
-    event.target.value = ''
-    event.preventDefault()
+  $(document).on 'keypress', '[data-behavior~=room_speaker]', (event) ->
+    if event.keyCode is 13
+      # speak メソッド, event.target.valueを引数に
+      App.room.speak [event.target.value, $('[data-user_id]').attr('data-user_id'), $('[data-room_id]').attr('data-room_id')]
+      event.target.value = ''
+      event.preventDefault()
