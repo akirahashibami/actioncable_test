@@ -1,0 +1,14 @@
+<p><%= "ルーム名：#{@room.name}" %></p>
+
+<!-- 投稿フォーム -->
+<input  type="text"
+        data-behavior="room_speaker"
+        data-user_id="<%= current_user.id %>"
+        data-room_id="<%= @room.id %>"
+        >
+
+<div id="chats">
+  <%= render "chat", collection: @chats %>
+</div>
+
+<%= link_to "Back", chats_path %>

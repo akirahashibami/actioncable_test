@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Chats</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Message</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @chats.each do |chat| %>
+      <tr>
+        <td><%= chat.message %></td>
+        <td><%= link_to 'Show', chat %></td>
+        <td><%= link_to 'Edit', edit_chat_path(chat) %></td>
+        <td><%= link_to 'Destroy', chat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Chat', new_chat_path %>
+
+<% if user_signed_in? %>
+  <h3>トークルーム作成</h3>
+  <%= form_with model: @room do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <%= f.submit %>
+  <% end %>
+
+  <h3>参加済トークルーム一覧</h3>
+  <% @rooms.each do |room| %>
+    <%= link_to "#{room.name}", room_path(room) %>
+  <% end %>
+
+  <h3>未参加トークルーム一覧</h3>
+  <% @nonrooms.each do |room| %>
+    <%= room.name %>
+  <% end %>
+<% end %>
