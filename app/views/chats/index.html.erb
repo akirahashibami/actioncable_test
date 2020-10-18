@@ -41,6 +41,6 @@
 
   <h3>未参加トークルーム一覧</h3>
   <% @nonrooms.each do |room| %>
-    <%= room.name %>
+    <%= link_to "#{room.name}", room_path(room) %>
   <% end %>
 <% end %>
